@@ -1,0 +1,18 @@
+.timelineObjects[] | .activitySegment | select(. != null) |
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "LineString",
+    "coordinates": [
+      [ try ([.startLocation.longitudeE7 / 1e7, .startLocation.latitudeE7 / 1e7]) ],
+      (.waypointPath.waypoints | select(. != null) | map([.lngE7 / 1e7, .latE7 / 1e7])),
+      [ try ([.endLocation.longitudeE7 / 1e7, .endLocation.latitudeE7 / 1e7]) ]
+    ] | flatten(1)
+  },
+  "properties": {
+    "activityType": .activityType,
+    "distance": .distance,
+    "startTimestamp": .duration.startTimestamp,
+    "endTimestamp": .duration.endTimestamp,
+  }
+}
