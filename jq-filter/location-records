@@ -1,0 +1,15 @@
+.locations[] |
+try({
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      .longitudeE7 / 1e7,
+      .latitudeE7 / 1e7
+    ]
+  },
+  "properties": {
+    "accuracy": .accuracy,
+    "timestamp": .timestamp
+  }
+})
