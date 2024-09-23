@@ -1,5 +1,5 @@
 import { cache, createAsync } from "@solidjs/router";
-import { Chart, ChartConfiguration } from "chart.js/auto";
+import { Chart } from "chart.js/auto";
 import { createEffect, createSignal, onMount } from "solid-js";
 import { duckdb } from "~/duckdb";
 
@@ -38,8 +38,6 @@ export default function ActivityTypeByYearBarChart() {
 
     // Get unique activity types
     const activityTypes = [...new Set(data.map(d => d.activityType))];
-
-    console.log(activityTypes);
 
     // Clear existing datasets
     chartInstance.data.datasets = [];

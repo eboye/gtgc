@@ -1,4 +1,4 @@
-import { Container, Nav, Navbar, NavDropdown } from "solid-bootstrap";
+import { Container, Nav, Navbar } from "solid-bootstrap";
 
 export default function AppNavBar() {
   return (
