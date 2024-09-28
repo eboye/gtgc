@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { provideFileRouter, requestContextInterceptor } from '@analogjs/router';
 import { withComponentInputBinding } from '@angular/router';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,5 +19,6 @@ export const appConfig: ApplicationConfig = {
       withFetch(),
       withInterceptors([requestContextInterceptor])
     ),
+    provideAnimations(),
   ],
 };
