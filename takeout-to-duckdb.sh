@@ -23,7 +23,7 @@ echo "$FILES_IN_TAKEOUT" | while read -r FILE_IN_TAKEOUT; do
         unzip -p "$TAKEOUT_PATH" "$FILE_IN_TAKEOUT" | jq -f ./jq-filter/semantic-location-history --compact-output >> "$TEMP_SEMANTIC_LOCATIONS_PATH"
     fi
 done
-echo "  Found $(cat $TEMP_SEMANTIC_LOCATIONS_PATH | wc -l)"
+echo " Found $(cat $TEMP_SEMANTIC_LOCATIONS_PATH | wc -l)"
 
 echo -n "Extracting location records..."
 # Find the path in the archive for the "Records.json" file
@@ -33,7 +33,7 @@ if [ -z "$RECORDS_FILE" ]; then
     exit 1
 fi
 unzip -p "$TAKEOUT_PATH" "$RECORDS_FILE" | jq -f ./jq-filter/location-records --compact-output > "$TEMP_LOCATION_RECORDS_PATH"
-echo " Found $(cat $TEMP_LOCATION_RECORDS_PATH | wc -l)"
+echo " Found $(cat "$TEMP_LOCATION_RECORDS_PATH" | wc -l)"
 
 echo -n "Creating DuckDB database..."
 duckdb $DUCKDB_PATH -c "INSTALL spatial;"
