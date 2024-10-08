@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Database } from 'duckdb-async';
 
 let _database: Database | undefined;
