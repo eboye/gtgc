@@ -1,15 +1,22 @@
 import { defineAction } from 'astro:actions';
-import { z } from 'astro:schema';
 import { Datasource } from './datasource';
+import { z } from 'astro:content';
 
 export const server = {
-  getGreeting: defineAction({
+  queryDistanceByActivityTypeAndYear: defineAction({
     input: z.object({
-      name: z.string(),
+      startDate: z.string().datetime(),
+      endDate: z.string().datetime(),
     }),
     handler: async (input: any) => {
-      console.log(input);
-      return await Datasource.getMany('SELECT * FROM semantic_history LIMIT 5');
+      const { startDate, endDate } = input;
+      return await Datasource.getMany(`
+        SELECT YEAR(endTimestamp) as year, activityType, sum(distance) as distance
+        FROM semantic_history
+        WHERE endTimestamp BETWEEN ?::DATE AND ?::DATE
+        GROUP BY YEAR(endTimestamp), activityType
+        ORDER BY YEAR(endTimestamp), activityType;
+      `, startDate, endDate);
     }
   })
 }
