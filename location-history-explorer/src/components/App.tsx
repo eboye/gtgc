@@ -1,5 +1,4 @@
-import { useContext, useState } from "react";
-import dayjs from "dayjs";
+import { useState } from "react";
 import {
   Container,
   Content,
@@ -17,15 +16,39 @@ import {
 import BarChartIcon from "@rsuite/icons/BarChart";
 import GlobalIcon from "@rsuite/icons/Global";
 import "rsuite/dist/rsuite.min.css";
-import { DateRangeContext } from "../context/DateRangeContext";
+import { DateRangeContext, type DateRange } from "../context/DateRangeContext";
 import DistanceByActivityType from "./DistanceByActivityTypeBarChart";
+import { subMonths, subYears } from "date-fns";
+import { type RangeType } from "rsuite/esm/DateRangePicker";
 
 const panelStyles = {
   padding: "15px 20px",
 };
 
-export default function App() {
-  const [dateRange, setDateRange] = useState(useContext(DateRangeContext));
+export default function App({ minDate, maxDate }: { minDate: Date; maxDate: Date }) {
+  const [dateRange, setDateRange] = useState<DateRange>([minDate, maxDate]);
+  const predefinedRanges = [
+    {
+      label: "All Time",
+      value: [minDate, maxDate],
+      placement: "left",
+    },
+    {
+      label: "Last Year",
+      value: [subYears(new Date(), 1), new Date()],
+      placement: "left",
+    },
+    {
+      label: "Last Month",
+      value: [subMonths(new Date(), 1), new Date()],
+      placement: "left",
+    },
+    {
+      label: "Today",
+      value: [new Date(), new Date()],
+      placement: "left",
+    },
+  ] as RangeType[];
 
   return (
     <DateRangeContext.Provider value={dateRange}>
@@ -41,6 +64,7 @@ export default function App() {
                       Date Range
                     </Text>
                     <DateRangePicker
+                      ranges={predefinedRanges}
                       defaultValue={dateRange}
                       onChange={(dates) => {
                         if (dates && dates.length === 2) setDateRange(dates);

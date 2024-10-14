@@ -3,6 +3,14 @@ import { Datasource } from './datasource';
 import { z } from 'astro:content';
 
 export const server = {
+  minAndMaxDates: defineAction({
+    handler: async () => {
+      return await Datasource.getOne(`
+        SELECT MAX(timestamp) as max, MIN(timestamp) as min
+        FROM location_records
+      `) as { max: Date, min: Date };
+    }
+  }),
   queryDistanceByActivityTypeAndYear: defineAction({
     input: z.object({
       startDate: z.string().datetime(),

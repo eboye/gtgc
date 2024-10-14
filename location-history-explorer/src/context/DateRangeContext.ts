@@ -1,9 +1,9 @@
-import dayjs from "dayjs";
+import { subYears } from "date-fns";
 import { createContext } from "react";
 
 export type DateRange = [Date, Date];
 
 export const DateRangeContext = createContext<DateRange>([
-  dayjs().subtract(1, "year").toDate(),
-  dayjs().toDate(),
+  subYears(new Date(), 1),
+  new Date(),
 ]);
