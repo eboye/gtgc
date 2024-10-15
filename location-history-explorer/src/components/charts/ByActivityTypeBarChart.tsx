@@ -10,7 +10,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { DateRangeContext } from "../context/DateRangeContext";
+import { DateRangeContext } from "../../context/DateRangeContext";
 
 const colors = [
   "#845ec2",
@@ -21,7 +21,7 @@ const colors = [
   "#008e9b",
 ];
 
-export default function DistanceByActivityType() {
+export default function ByActivityTypeBarChart({ type }: { type: 'duration' | 'distance' }) {
   const dateRange = useContext(DateRangeContext);
   const [startDate, endDate] = dateRange;
 
@@ -30,10 +30,21 @@ export default function DistanceByActivityType() {
 
   useEffect(() => {
     async function fetchData() {
-      const { data } = await actions.queryDistanceByActivityTypeAndYear({
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
-      });
+      let data;
+      if (type === 'duration') {
+        const res = await actions.queryDurationByActivityTypeAndYear({
+          startDate: startDate.toISOString(),
+          endDate: endDate.toISOString(),
+        });
+        data = res.data;
+
+      } else {
+        const res = await actions.queryDistanceByActivityTypeAndYear({
+          startDate: startDate.toISOString(),
+          endDate: endDate.toISOString(),
+        });
+        data = res.data;
+      }
       if (!data) return;
 
       setActivityTypes([...new Set(data.map((d) => d.activityType))]);
@@ -44,7 +55,7 @@ export default function DistanceByActivityType() {
             name: Number(item.year),
           };
         }
-        acc[item.year][item.activityType] = Number(item.distance);
+        acc[item.year][item.activityType] = Number(item.sum);
         return acc;
       }, {});
       setData(Object.values(transformedData));
