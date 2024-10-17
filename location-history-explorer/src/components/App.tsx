@@ -13,7 +13,7 @@ export default function App({
   return (
     <HashRouter>
       <Routes>
-        <Route element={<Layout minDate={minDate} maxDate={maxDate} />}>
+        <Route element={<Layout allTimeDateRange={[minDate, maxDate]} />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/map" element={<Map />} />
         </Route>
