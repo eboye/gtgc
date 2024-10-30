@@ -11,15 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { DateRangeContext } from "../../context/DateRangeContext";
-
-const colors = [
-  "#845ec2",
-  "#d65db1",
-  "#ff6f91",
-  "#ff9671",
-  "#ffc75f",
-  "#008e9b",
-];
+import { colorByActivityType } from "../../utils/color-palette";
 
 export default function ByActivityTypeBarChart({ type }: { type: 'duration' | 'distance' }) {
   const dateRange = useContext(DateRangeContext);
@@ -85,7 +77,7 @@ export default function ByActivityTypeBarChart({ type }: { type: 'duration' | 'd
               key={idx}
               dataKey={activityType}
               stackId="a"
-              fill={colors[idx % colors.length]}
+              fill={colorByActivityType(activityType)}
               isAnimationActive={false}
             />
           ))}

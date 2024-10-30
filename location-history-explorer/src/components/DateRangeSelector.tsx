@@ -2,11 +2,17 @@ import { subMonths, subYears } from "date-fns";
 import { useContext } from "react";
 import type { RangeType } from "rsuite/esm/DateRangePicker";
 import { DateRangeContext, type DateRange } from "../context/DateRangeContext";
-import { DateRangePicker, Text } from "rsuite";
+import {
+  Button,
+  ButtonGroup,
+  ButtonToolbar,
+  DateRangePicker,
+  Text,
+} from "rsuite";
 
 export default function DateRangeSelector({
   allTimeDateRange,
-  onDateRangeChange
+  onDateRangeChange,
 }: {
   allTimeDateRange: DateRange;
   onDateRangeChange: (dateRange: DateRange) => void;
@@ -51,6 +57,44 @@ export default function DateRangeSelector({
         isoWeek={true}
         cleanable={false}
       />
+
+      <Text muted weight="light">
+        Advance Range
+      </Text>
+      <ButtonToolbar>
+        <ButtonGroup>
+          <Button>y</Button>
+          <Button>m</Button>
+          <Button>w</Button>
+          <Button>d</Button>
+        </ButtonGroup>
+        &lt;-&gt;
+        <ButtonGroup>
+          <Button>d</Button>
+          <Button>w</Button>
+          <Button>m</Button>
+          <Button>y</Button>
+        </ButtonGroup>
+      </ButtonToolbar>
+
+      <Text muted weight="light">
+        Extend Range
+      </Text>
+      <ButtonToolbar>
+        <ButtonGroup>
+          <Button>y</Button>
+          <Button>m</Button>
+          <Button>w</Button>
+          <Button>d</Button>
+        </ButtonGroup>
+        - / +
+        <ButtonGroup>
+          <Button>d</Button>
+          <Button>w</Button>
+          <Button>m</Button>
+          <Button>y</Button>
+        </ButtonGroup>
+      </ButtonToolbar>
     </>
   );
 }

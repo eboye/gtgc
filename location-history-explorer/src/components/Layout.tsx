@@ -31,12 +31,12 @@ export default function Layout({
   return (
     <DateRangeContext.Provider value={dateRange}>
       <CustomProvider theme="dark">
-        <Container>
-          <Sidebar>
+        <Container style={{ height: "100vh" }}>
+          <Sidebar width="380">
             <Sidenav>
               <Sidenav.Header></Sidenav.Header>
               <Sidenav.Body>
-                <Nav defaultActiveKey="1">
+                <Nav defaultActiveKey="1" style={{ height: "100%" }}>
                   <Nav.Item panel style={panelStyles}>
                     <DateRangeSelector
                       allTimeDateRange={allTimeDateRange}
