@@ -1,1 +1,5 @@
 *.db
+.idea/
+.vscode
+*.zip
+tmp/

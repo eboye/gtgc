@@ -1,0 +1,13 @@
+services:
+    app:
+        container_name: app
+        build:
+            context: .
+            dockerfile: Dockerfile
+        entrypoint: [
+          "/bin/bash", "-c", "/app/takeout-to-duckdb.sh /app/takeout.zip /app/duck.db && cd /app/location-history-explorer && bun install && bun dev"
+        ]
+        ports:
+            - "5173:5173"
+        volumes:
+            - .:/app
